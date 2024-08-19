@@ -137,9 +137,19 @@ if Type == "Daerah":
         st.metric(label='Best Kategori', value=(filtered_data.groupby('Kategori')['Row Total'].sum().idxmax()))
 
         data = filtered_data.groupby(['YearMonth','Daerah', 'Year'])['Row Total'].sum().reset_index()
+        if selecteddaerah:
 
-        stat2 = px.line(data, x="YearMonth", y="Row Total", text=(data['YearMonth'].dt.strftime('%b %Y')), title= "Time Series by Daerah")
-        st.plotly_chart(stat2)
+            stat2 = px.line(data, x="YearMonth", y="Row Total", text=(data['YearMonth'].dt.strftime('%b %Y')), title= "Time Series by Daerah")
+            st.plotly_chart(stat2)
+
+        else:
+            data = filtered_data.groupby(['YearMonth', 'Year'])['Row Total'].sum().reset_index()
+
+
+            stat2 = px.line(data, x="YearMonth", y="Row Total", text=(data['YearMonth'].dt.strftime('%b %Y')), title= "Time Series by Daerah")
+            st.plotly_chart(stat2)
+
+
 
 
 
